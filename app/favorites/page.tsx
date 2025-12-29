@@ -6,6 +6,7 @@ import NoItem from '../components/NoItem'
 import type { Home } from '@prisma/client'
 import { ListingCard } from '../components/ListingCard'
 import SkeletonCard from '../components/SkeletonCard'
+import { unstable_noStore } from 'next/cache'
 
 interface Favorite {
     id: string,
@@ -15,6 +16,7 @@ interface Favorite {
 }
 
 const getData = async (userId: string): Promise<Favorite[]> => {
+    unstable_noStore()
     const data = await prisma.favorite.findMany({
         where: {
             userId

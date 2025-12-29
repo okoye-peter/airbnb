@@ -1,21 +1,26 @@
-import { Suspense } from 'react'
 import prisma from '../lib/db';
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import { redirect } from 'next/navigation';
 import NoItem from '../components/NoItem';
 import { ListingCard } from '../components/ListingCard';
-// import SkeletonCard from '../components/SkeletonCard';
+import { unstable_noStore } from 'next/cache'
 
 
 const getData = async (userId: string) => {
+    unstable_noStore();
     const data = await prisma.reservation.findMany({
         where: {
             userId
         },
         include:{
             home: {
-                include: {
-                    favorites:{
+                select: {
+                    id: true,
+                    description: true,
+                    photo: true,
+                    price: true,
+                    country: true,
+                    favorites: {
                         where: {
                             userId
                         }
@@ -30,6 +35,7 @@ const getData = async (userId: string) => {
 
     return data;
 }
+
 const Reservations = () => {
     return (
         <>
@@ -56,24 +62,19 @@ async function ShowItems() {
                     <NoItem />
                     :
                     <div className="grid gap-8 mt-8 lg:grid-cols-4 sm:grid-cols-2 md:grid-cols-3">
-                        {data.map((item) => (<ListingCard key={item.id} home={{ ...item.home, favorites: [{ id: item.home?.favorites[0]?.id as string, userId: item.home?.favorites[0]?.userId as string, homeId: item.home?.favorites[0]?.homeId as string }] }} userId={user?.id} pathName="/reservations" />))}
+                        {data
+                            .filter((item) => item.home !== null) // Filter out null homes
+                            .map((item) => (
+                                <ListingCard 
+                                    key={item.id} 
+                                    home={item.home!} // Non-null assertion since we filtered
+                                    userId={user.id} 
+                                    pathName="/reservations" 
+                                />
+                            ))
+                        }
                     </div>
             }
         </>
     );
 }
-
-// function SkeletonLoading() {
-//     return (
-//         <div className="grid gap-8 mt-8 lg:grid-cols-4 sm:grid-cols-2 md:grid-cols-3">
-//             <SkeletonCard />
-//             <SkeletonCard />
-//             <SkeletonCard />
-//             <SkeletonCard />
-//             <SkeletonCard />
-//             <SkeletonCard />
-//             <SkeletonCard />
-//             <SkeletonCard />
-//         </div>
-//     )
-// }

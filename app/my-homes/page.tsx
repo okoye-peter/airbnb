@@ -5,8 +5,10 @@ import NoItem from "../components/NoItem";
 import { ListingCard } from "../components/ListingCard";
 import { Suspense } from "react";
 import MyHomesLoading from "./loading";
+import { unstable_noStore } from 'next/cache'
 
 const getData = async (userId: string) => {
+    unstable_noStore()
     const data = await prisma.home.findMany({
         where: {
             userId,

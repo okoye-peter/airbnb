@@ -5,8 +5,10 @@ import prisma from "./lib/db";
 import SkeletonCard from "./components/SkeletonCard";
 import NoItem from "./components/NoItem";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import { unstable_noStore } from 'next/cache'
 
 const getData = async ({ searchParams, userId }: { searchParams?: Promise<{ filter?: string, country?: string, guest?: string, bedrooms?: string, bathrooms?: string }>, userId?: string }) => {
+    unstable_noStore();
     const { filter, country, guest, bedrooms } = await searchParams || {}
     return await prisma.home.findMany({
         where: {
