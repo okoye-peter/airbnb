@@ -34,14 +34,14 @@ export default function Description({ params }: { params: Promise<{ id: string }
 
     return (
         <>
-            <div className="w-3/5 mx-auto">
+            <div className="w-4/5 mx-auto md:w-3/5">
                 <h2 className="text-3xl font-semibold tracking-tight transition-colors">
                     Please describe your home as good as you can
                 </h2>
             </div>
             <form action={formAction}>
                 <input type="hidden" name="homeId" value={homeId} />
-                <div className="flex flex-col w-3/5 mx-auto mt-10 gap-y-5 mb-36">
+                <div className="flex flex-col w-4/5 mx-auto mt-10 md:w-3/5 gap-y-5 mb-36">
                     <div className="flex flex-col gap-y-2">
                         <Label>Title</Label>
                         <Input type="text" placeholder="Enter title" name="title" required />

@@ -58,7 +58,7 @@ const HomeAddress = ({ params }: { params: Promise<{ id: string }> }) => {
     return (
         <>
             <div className='w-3/5 mx-auto'>
-                <h2 className='text-3xl font-semibold tracking-tight transition-colors mb-10'>
+                <h2 className='mb-10 text-3xl font-semibold tracking-tight transition-colors'>
                     Where is your home located?
                 </h2>
             </div>
@@ -67,8 +67,8 @@ const HomeAddress = ({ params }: { params: Promise<{ id: string }> }) => {
                 <input type="hidden" name="homeId" value={homeId || ''} />
                 <input type="hidden" name="countryValue" value={locationValue || ''} />
 
-                <div className="w-3/5 mx-auto mb-36">
-                    <div className="mb-5 w-full">
+                <div className="w-4/5 mx-auto md:w-3/5 mb-36">
+                    <div className="w-full mb-5">
                         <Select required onValueChange={(value) => setLocationValue(value)}>
                             <SelectTrigger className="w-full">
                                 <SelectValue placeholder="Select a Country" />
@@ -85,7 +85,7 @@ const HomeAddress = ({ params }: { params: Promise<{ id: string }> }) => {
                             </SelectContent>
                         </Select>
                         {state?.errors?.countryValue && (
-                            <p className="text-sm text-destructive mt-1">
+                            <p className="mt-1 text-sm text-destructive">
                                 {state.errors.countryValue}
                             </p>
                         )}

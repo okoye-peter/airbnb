@@ -41,10 +41,10 @@ const SearchComponent = () => {
         <Dialog>
             <DialogTrigger asChild>
                 <div className='flex items-center px-5 py-2 border rounded-full cursor-pointer'>
-                    <div className="flex h-full font-medium divide-x">
-                        <p className="px-4">Anywhere</p>
-                        <p className="px-4">Any Week</p>
-                        <p className="px-4">Add Guests</p>
+                    <div className="flex h-full text-sm font-medium divide-x md:text-md">
+                        {/* <p className="px-4">Anywhere</p> */}
+                        {/* <p className="px-4">Any Week</p> */}
+                        <p className="px-4">Search</p>
                     </div>
                     <Search className='w-6 h-6 p-1 text-white rounded-full bg-primary' />
                 </div>

@@ -29,12 +29,12 @@ export default function StructureRoute({ params }: { params: Promise<{ id: strin
 
     return (
         <>
-            <div className="w-3/5 mx-auto">
+            <div className="w-4/5 mx-auto md:w-3/5">
                 <h2 className="text-3xl font-semibold tracking-tight transition-colors">
                     Which of these best describe your Home?
                 </h2>
                 {state?.errors && (
-                    <div className="text-red-500 mt-2">
+                    <div className="mt-2 text-red-500">
                         {state.errors.home || state.errors.category}
                     </div>
                 )}

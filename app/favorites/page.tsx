@@ -32,7 +32,7 @@ const getData = async (userId: string): Promise<Favorite[]> => {
 const Page = async () => {
 
     return (
-        <div className='container py-5 mx-auto mt-10 lg:py-10'>
+        <div className='container px-10 py-5 mx-auto mt-10 lg:py-10'>
             <h2 className='text-3xl font-semibold tracking-tight'>Your favorites</h2>
           
                 <Suspense key={'favorites'} fallback={<SkeletonLoading />}>

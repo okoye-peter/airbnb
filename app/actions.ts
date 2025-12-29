@@ -23,9 +23,9 @@ export async function createAirbnbHome({ userId }: { userId: string }) {
             }
         })
 
-        return redirect(`create/${data.id}/structure`)
+        return redirect(`/create/${data.id}/structure`)
     } else if (!data.description && !data.category && !data.country) {
-        return redirect(`create/${data.id}/structure`)
+        return redirect(`/create/${data.id}/structure`)
     } else if (data.category && !data.description) {
         return redirect(`/create/${data.id}/description`)
     } else if (data.category && data.description && !data.country) {
@@ -37,7 +37,7 @@ export async function createAirbnbHome({ userId }: { userId: string }) {
             }
         })
 
-        return redirect(`create/${data.id}/structure`)
+        return redirect(`/create/${data.id}/structure`)
     }
 }
 

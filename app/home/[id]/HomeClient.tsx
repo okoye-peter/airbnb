@@ -64,7 +64,7 @@ export default function HomeClient({ user, home, homeId, reservations }: HomeCli
     }, [state])
 
     return (
-        <div className='w-[75%] mx-auto mt-10 mb-12'>
+        <div className='container px-5 mx-auto mt-10 mb-12'>
             <h1 className='mb-5 text-2xl font-medium'>
                 {home.title || 'Untitled Property'}
             </h1>
@@ -84,8 +84,8 @@ export default function HomeClient({ user, home, homeId, reservations }: HomeCli
                 </div>
             )}
 
-            <div className='flex justify-between mt-8 gap-x-24'>
-                <div className="w-2/3">
+            <div className='flex flex-wrap justify-between gap-24 mt-8 md:flex-nowrap'>
+                <div className="md:w-2/3">
                     <h3 className='text-xl font-medium'>{country?.flag} {country?.label} / {country?.region}</h3>
                     <div className='flex gap-x-2 text-muted-foreground'>
                         <p>{home.guest} guest</p> * <p>{home.bedrooms} Bedrooms</p> * <p>{home.bathrooms} Bathroom</p>
@@ -113,7 +113,7 @@ export default function HomeClient({ user, home, homeId, reservations }: HomeCli
                     <HomeMap locationValue={country?.value as string} />
                 </div>
 
-                <form action={formAction}>
+                <form action={formAction} className=''>
                     <input type='hidden' name='homeId' value={homeId} />
                     <input type='hidden' name='userId' value={user?.id} />
                     <SelectCalendar reservations={reservations} />
