@@ -31,5 +31,5 @@ export async function GET() {
         });
     }
 
-    return redirect('/');
+    return redirect('https://airbnb-gz1c.vercel.app/');
 }
