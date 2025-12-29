@@ -1,0 +1,4 @@
+import { createClient } from '@supabase/supabase-js'
+
+// Create a single supabase client for interacting with your database
+export const supabase = createClient(process.env.SUPABASE_CLIENT_URL as string, process.env.SSUPABASE_ANON_KEY as string)

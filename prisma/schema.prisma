@@ -1,0 +1,63 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+}
+
+model User {
+    id           String   @id @unique
+    email        String
+    firstName    String
+    lastName     String
+    profileImage String?
+    createdAt    DateTime @default(now())
+    updatedAt    DateTime @updatedAt
+
+    favorites Favorite[]
+    homes     Home[]
+
+    reservations Reservation[]
+}
+
+model Home {
+    id          String        @id @default(uuid())
+    title       String?
+    description String?
+    guest       String?
+    bedrooms    String?
+    bathrooms   String?
+    country     String?
+    photo       String?
+    price       Int?
+    createdAt   DateTime      @default(now())
+    category    String?
+    location    String?
+    userId      String
+    user        User?         @relation(fields: [userId], references: [id])
+    favorites   Favorite[]
+    reservation Reservation[]
+}
+
+model Favorite {
+    id        String   @id @default(uuid())
+    userId    String
+    user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    homeId    String
+    home      Home     @relation(fields: [homeId], references: [id], onDelete: Cascade)
+    createdAt DateTime @default(now())
+
+    @@unique([userId, homeId])
+}
+
+model Reservation {
+    id        String   @id @default(uuid())
+    startDate DateTime
+    endDate   DateTime
+    user      User?    @relation(fields: [userId], references: [id])
+    userId    String?
+    home      Home?    @relation(fields: [homeId], references: [id])
+    homeId    String?
+    createdAt DateTime @default(now())
+}

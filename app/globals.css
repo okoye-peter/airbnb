@@ -1,26 +1,111 @@
 @import "tailwindcss";
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@import "tw-animate-css";
 
 @theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+:root {
+  --radius: 0.5rem;
+  /* Rose theme - Light mode */
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.2 0.013 286.375);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.2 0.013 286.375);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.2 0.013 286.375);
+  --primary: oklch(0.568 0.223 13.427);
+  --primary-foreground: oklch(0.988 0.013 17.477);
+  --secondary: oklch(0.967 0.006 286.375);
+  --secondary-foreground: oklch(0.267 0.008 286.375);
+  --muted: oklch(0.967 0.006 286.375);
+  --muted-foreground: oklch(0.553 0.015 286.370);
+  --accent: oklch(0.967 0.006 286.375);
+  --accent-foreground: oklch(0.267 0.008 286.375);
+  --destructive: oklch(0.661 0.237 27.325);
+  --destructive-foreground: oklch(0.996 0.003 106.423);
+  --border: oklch(0.929 0.008 286.375);
+  --input: oklch(0.929 0.008 286.375);
+  --ring: oklch(0.568 0.223 13.427);
+  --chart-1: oklch(0.696 0.166 41.116);
+  --chart-2: oklch(0.548 0.119 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.774 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+}
+
+.dark {
+  /* Rose theme - Dark mode */
+  --background: oklch(0.186 0.018 33.364);
+  --foreground: oklch(0.967 0 0);
+  --card: oklch(0.259 0.012 33.543);
+  --card-foreground: oklch(0.967 0 0);
+  --popover: oklch(0.231 0 0);
+  --popover-foreground: oklch(0.967 0 0);
+  --primary: oklch(0.568 0.223 13.427);
+  --primary-foreground: oklch(0.988 0.013 17.477);
+  --secondary: oklch(0.305 0.005 286.027);
+  --secondary-foreground: oklch(0.996 0 0);
+  --muted: oklch(0.303 0 0);
+  --muted-foreground: oklch(0.729 0.007 286.375);
+  --accent: oklch(0.293 0.009 33.364);
+  --accent-foreground: oklch(0.996 0 0);
+  --destructive: oklch(0.465 0.164 27.325);
+  --destructive-foreground: oklch(0.988 0.016 17.716);
+  --border: oklch(0.305 0.005 286.027);
+  --input: oklch(0.305 0.005 286.027);
+  --ring: oklch(0.568 0.223 13.427);
+  --chart-1: oklch(0.611 0.233 264.052);
+  --chart-2: oklch(0.598 0.138 172.397);
+  --chart-3: oklch(0.686 0.182 85.873);
+  --chart-4: oklch(0.704 0.198 304.785);
+  --chart-5: oklch(0.788 0.178 73.420);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+.no-scrollbar::--webkit-scrollbar {
+    display: none;
+}
+
+.no-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow: none
 }
