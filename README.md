@@ -2,6 +2,10 @@
 
 A modern, full-stack Airbnb clone built with Next.js 16, featuring user authentication, property listings, reservations, and favorites functionality.
 
+## 🌐 Live Demo
+
+Check out the live application: [https://airbnb-gz1c.vercel.app/](https://airbnb-gz1c.vercel.app/)
+
 ## ✨ Features
 
 - 🔐 **User Authentication** - Secure authentication powered by Kinde Auth
