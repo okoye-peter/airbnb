@@ -8,12 +8,7 @@ const nextConfig = {
                 port: "",
             },
             {
-                hostname: "glvmmupiqwlmhicmggqp.supabase.co",
-                protocol: "https",
-                port: "",
-            },
-            {
-                hostname: "kooqbdukzaplpdmyzysj.supabase.co",
+                hostname: "res.cloudinary.com",
                 protocol: "https",
                 port: "",
             },

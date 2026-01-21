@@ -2,7 +2,7 @@
 
 import { redirect } from "next/navigation";
 import prisma from "@/app/lib/db"
-import { supabase } from "./lib/supabase";
+import { uploadToCloudinary } from "./lib/cloudinary";
 import { revalidatePath } from "next/cache";
 
 export async function createAirbnbHome({ userId }: { userId: string }) {
@@ -86,38 +86,7 @@ export async function saveCategory(
     }
 }
 
-// Helper function for retry logic
-async function uploadWithRetry(
-    bucket: string,
-    filename: string,
-    file: File,
-    contentType: string,
-    maxRetries = 3
-) {
-    for (let attempt = 1; attempt <= maxRetries; attempt++) {
-        try {
-            const { data, error } = await supabase.storage
-                .from(bucket)
-                .upload(filename, file, {
-                    cacheControl: '2592000',
-                    contentType,
-                });
 
-            if (error) throw error;
-            return { data, error: null };
-        } catch (err) {
-            console.log(`Upload attempt ${attempt} failed:`, err);
-
-            if (attempt === maxRetries) {
-                return { data: null, error: err };
-            }
-
-            // Exponential backoff: wait 1s, 2s, 3s between retries
-            await new Promise(resolve => setTimeout(resolve, 1000 * attempt));
-        }
-    }
-    return { data: null, error: new Error('Max retries exceeded') };
-}
 
 export const saveDescription = async (
     prevState: { status: boolean; errors?: { title?: string; description?: string; image?: string; price?: string; }; redirectUrl?: string; } | undefined,
@@ -163,30 +132,13 @@ export const saveDescription = async (
         return { status: false, errors: { image: 'Image must be less than 5MB' } };
     }
 
-    const contentType = image.type || 'application/octet-stream';
-    const filename = `${homeId}/${Date.now()}-${image.name.replace(/[^a-zA-Z0-9.-]/g, '_')}`;
-
     try {
-        // Upload with retry logic
-        const { data: uploadData, error: uploadError } = await uploadWithRetry(
-            'airbnb',
-            filename,
-            image,
-            contentType
-        );
-
-        if (uploadError || !uploadData) {
-            console.error('Supabase upload error:', uploadError);
-            return { status: false, errors: { image: 'Image upload failed. Please try again.' } };
-        }
-
-        // Get public URL for stored file
-        const storagePath = uploadData.path ?? uploadData.fullPath ?? filename;
-        const { data: publicData } = supabase.storage.from('airbnb').getPublicUrl(storagePath);
-        const publicUrl = publicData?.publicUrl ?? null;
+        // Upload to Cloudinary
+        const uploadResult = await uploadToCloudinary(image, 'airbnb/homes');
+        const publicUrl = uploadResult.secure_url;
 
         if (!publicUrl) {
-            console.error('Failed to get public URL');
+            console.error('Failed to get public URL from Cloudinary');
             return { status: false, errors: { image: 'Failed to generate image URL' } };
         }
 
@@ -316,7 +268,7 @@ export const toggleUserHomeFavoriteStatusAction = async (
 export async function createReservation(prevState: {
     status: boolean;
     message: string;
-     redirectUrl?: string;
+    redirectUrl?: string;
 } | undefined, formData: FormData) {
     try {
         const userId = formData.get('userId') as string;
